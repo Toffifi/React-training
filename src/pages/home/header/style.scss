@@ -1,0 +1,15 @@
+.header {
+  height: 450px;
+  border-bottom: 10px solid #9ca4ab;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('https://johngushue.typepad.com/.a/6a00d83451f25369e2016301bc8066970d-pi');
+  background-position: center;
+  margin-top: -25px;
+  display: flex;
+  flex-direction: column;
+
+  .add-movie-button {
+    align-self: flex-end;
+    margin: 25px;
+  }
+}

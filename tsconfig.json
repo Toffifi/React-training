@@ -18,6 +18,7 @@
     },
     "include": [
       "src/**/*.tsx",
+      "src/**/*.ts",
       "webpack.config.ts"
     ],
     "exclude": [
