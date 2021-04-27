@@ -7,12 +7,13 @@ const myTheme: Theme = createMuiTheme({
         backgroundColor: '#232323',
         color: '#555555',
         borderRadius: '4px',
+        padding: '12px',
       },
     },
     MuiFilledInput: {
       input: {
-        padding: '15px',
-        fontSize: '1.2rem',
+        padding: '24px 20px 10px',
+        fontSize: '1rem',
       },
     },
     MuiSelect: {
@@ -31,21 +32,19 @@ const myTheme: Theme = createMuiTheme({
       colorTextSecondary: {
         color: '#afa7a7',
       },
+      body1: {
+        color: 'black',
+      },
     },
     MuiButton: {
       textPrimary: {
-        color: '#afa7a7;',
+        color: '#afa7a7',
+        fontSize: '0.9rem',
       },
     },
-    MuiIconButton: {
+    MuiSvgIcon: {
       root: {
-        position: 'absolute',
-        top: '7px',
-        right: '5px',
-        zIndex: 1,
-        backgroundColor: '#232323',
-        color: 'white',
-        padding: '7px',
+        color: '#F65261',
       },
     },
   },
@@ -61,6 +60,11 @@ const myTheme: Theme = createMuiTheme({
       fontSize: '2.3rem',
       letterSpacing: '0.06em',
       textTransform: 'uppercase',
+    },
+    h4: {
+      fontSize: '1rem',
+      letterSpacing: '0.06em',
+      color: 'white',
     },
     h5: {
       fontSize: '1rem',

@@ -13,20 +13,4 @@
       margin-right: 10px;
     }
   }
-
-  .movies-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-    margin: 0 20px;
-
-    p {
-      margin: auto;
-    }
-
-    .year {
-      text-align: end;
-      color: white;
-    }
-  }
 }

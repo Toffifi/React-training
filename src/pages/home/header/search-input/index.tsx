@@ -11,7 +11,7 @@ const SearchInput: React.FC = () => {
       <div className="search-input">
         <TextField
           id="filled-basic"
-          defaultValue="What do you want to watch?"
+          label="What do you want to watch?"
           variant="filled"
           style={{ width: '70%' }}
         />

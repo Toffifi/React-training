@@ -28,11 +28,7 @@ const Filters: React.FC = () => {
   return (
     <div className="filters">
       <div>
-        <ButtonGroup
-          variant="text"
-          color="primary"
-          aria-label="filters button group"
-        >
+        <ButtonGroup variant="text" color="primary">
           <Button>All</Button>
           <Button>Documentary</Button>
           <Button>Comedy</Button>
