@@ -1,11 +1,14 @@
-import Logo from './components/logo';
-import React, { FC } from 'react';
 import './app.scss';
+
+import React, { FC } from 'react';
+
 import { ThemeProvider } from '@material-ui/core';
-import myTheme from './theme';
-import Home from './pages/home';
+
 import ErrorBoundary from './components/errorBoundary';
 import Footer from './components/footer';
+import Logo from './components/logo';
+import Home from './pages/home';
+import myTheme from './theme';
 
 const App: FC = () => {
   return (

@@ -1,16 +1,18 @@
+import './style.scss';
+
+import React from 'react';
+
 import {
-  ButtonGroup,
   Button,
+  ButtonGroup,
+  createStyles,
   FormControl,
   InputLabel,
+  makeStyles,
   MenuItem,
   Select,
-  createStyles,
-  makeStyles,
   Theme,
 } from '@material-ui/core';
-import React from 'react';
-import './style.scss';
 
 const Filters: React.FC = () => {
   const useStyles = makeStyles((theme: Theme) =>

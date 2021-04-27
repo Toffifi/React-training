@@ -1,6 +1,8 @@
-import { Button, TextField, Typography } from '@material-ui/core';
-import React from 'react';
 import './style.scss';
+
+import React from 'react';
+
+import { Button, TextField, Typography } from '@material-ui/core';
 
 const SearchInput: React.FC = () => {
   return (

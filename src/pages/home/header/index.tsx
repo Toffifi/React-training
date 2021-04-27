@@ -1,7 +1,10 @@
-import { Button } from '@material-ui/core';
-import React from 'react';
-import SearchInput from './search-input';
 import './style.scss';
+
+import React from 'react';
+
+import { Button } from '@material-ui/core';
+
+import SearchInput from './search-input';
 
 const Header: React.FC = () => {
   return (
