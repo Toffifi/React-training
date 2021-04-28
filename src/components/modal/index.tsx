@@ -1,6 +1,6 @@
 import './style.scss';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ModalType } from '@/enums/modalType';
@@ -16,6 +16,16 @@ const Modal = ({
   modalType: ModalType;
   setModalType: (arg: ModalType) => void;
 }): React.ReactPortal => {
+  const [modalContainer] = useState(() => document.createElement('div'));
+
+  useEffect(() => {
+    const modalRoot = document.querySelector('#modal-root');
+    modalRoot.appendChild(modalContainer);
+    return function cleanup() {
+      modalRoot.removeChild(modalContainer);
+    };
+  }, []);
+
   return ReactDOM.createPortal(
     modalType !== ModalType.null ? (
       <>
@@ -34,7 +44,7 @@ const Modal = ({
         </div>
       </>
     ) : null,
-    document.querySelector('#modal-root')
+    modalContainer
   );
 };
 
