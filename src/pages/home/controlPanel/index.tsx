@@ -14,7 +14,7 @@ import {
   Theme,
 } from '@material-ui/core';
 
-const Filters: React.FC = () => {
+const ControlPanel: React.FC = () => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       formControl: {
@@ -49,4 +49,4 @@ const Filters: React.FC = () => {
   );
 };
 
-export default Filters;
+export default ControlPanel;

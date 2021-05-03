@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/core';
 import ErrorBoundary from './components/errorBoundary';
 import Footer from './components/footer';
 import Logo from './components/logo';
-import Home from './pages/home';
+import HomeContainer from './pages/home';
 import myTheme from './theme';
 
 const App: FC = () => {
@@ -15,7 +15,7 @@ const App: FC = () => {
     <ThemeProvider theme={myTheme}>
       <ErrorBoundary>
         <Logo />
-        <Home />
+        <HomeContainer />
         <Footer />
       </ErrorBoundary>
     </ThemeProvider>
