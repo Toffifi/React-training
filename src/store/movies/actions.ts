@@ -5,36 +5,36 @@ import { SearchData } from '@/interfaces';
 import { mapSearchData } from '@/utils/mapSearchData';
 
 import { RootState } from '../';
-import { SET_MOVIES_DATA, SET_MOVIES_LOADING } from './types';
+import {
+  SET_MOVIES_DATA,
+  SET_MOVIES_LOADING,
+  SET_SEARCH_KEYWORD,
+} from './types';
+import { SetDataAction, SetLoadingAction, SetTitleAction } from './interfaces';
 
-export interface SetAction {
-  type: string;
-  data: SearchData;
-}
-export interface SetLoading {
-  type: string;
-  isLoading: boolean;
-}
+const url = 'http://localhost:4000';
 
-export type Action = SetAction | SetLoading;
-
-export const set = (data: SearchData): SetAction => {
+export const setData = (data: SearchData): SetDataAction => {
   return { type: SET_MOVIES_DATA, data };
 };
-export const setIsLoading = (isLoading: boolean): SetLoading => {
+export const setIsLoading = (isLoading: boolean): SetLoadingAction => {
   return { type: SET_MOVIES_LOADING, isLoading };
 };
 
-export const search = (
-  title: string
-): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async (dispatch): Promise<void> => {
+export const setKeyword = (searchKeyword: string): SetTitleAction => {
+  return { type: SET_SEARCH_KEYWORD, searchKeyword };
+};
+
+export const getData = (): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch, getState): Promise<void> => {
     dispatch(setIsLoading(true));
+
+    const params = getState().movies.searchResult.params;
     const response = await fetch(
-      `http://localhost:4000/movies?search=${title}&searchBy=title`
+      `${url}/movies?sortBy=${params.sortBy}&sortOrder=asc&search=${params.searchKeyword}&searchBy=title&filter=${params.genre}`
     );
     const result = await response.json();
-    dispatch(set(mapSearchData(result)));
+    dispatch(setData(mapSearchData(result)));
     dispatch(setIsLoading(false));
   };
 };

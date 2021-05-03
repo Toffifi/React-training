@@ -8,8 +8,9 @@ import * as movieActions from '@/store/movies/actions';
 
 const SearchInput: React.FC = () => {
   const dispatch = useDispatch();
-  const search = (title: string): void => {
-    dispatch(movieActions.search(title));
+  const search = (keyword: string): void => {
+    dispatch(movieActions.setKeyword(keyword));
+    dispatch(movieActions.getData());
   };
   return (
     <div className="search">

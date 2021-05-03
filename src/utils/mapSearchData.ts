@@ -1,5 +1,5 @@
 import { SearchData } from '@/interfaces';
-import { SearchResult } from '@/interfaces/api';
+import { SearchResult } from '@/store/movies/interfaces';
 
 export const mapSearchData = (result: SearchResult): SearchData => {
   return {

@@ -23,6 +23,8 @@ const useStyles = makeStyles({
     height: 400,
   },
 });
+
+const defaultImg = 'https://media.comicbook.com/files/img/default-movie.png';
 const MovieCard: React.FC<{ item: Movie }> = ({ item }) => {
   const classes = useStyles();
 
@@ -50,6 +52,10 @@ const MovieCard: React.FC<{ item: Movie }> = ({ item }) => {
             className={classes.media}
             image={item.poster}
             title={item.name}
+            component="img"
+            onError={(error) => {
+              error.target.src = defaultImg;
+            }}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">

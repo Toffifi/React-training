@@ -1,5 +1,5 @@
 export interface SearchParams {
-  searchKeyword?: string;
-  genre?: string;
-  sortBy?: string;
+  searchKeyword: string;
+  genre: string;
+  sortBy: string;
 }
