@@ -47,6 +47,15 @@ const myTheme: Theme = createMuiTheme({
         color: '#F65261',
       },
     },
+    MuiTab: {
+      textColorPrimary: {
+        color: 'white',
+      },
+      root: {
+        fontSize: '0.9rem',
+        minWidth: 'auto !important',
+      },
+    },
   },
   palette: {
     primary: {

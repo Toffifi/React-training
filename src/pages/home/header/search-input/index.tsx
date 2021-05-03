@@ -1,6 +1,6 @@
 import './style.scss';
 
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Button, TextField, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
@@ -8,10 +8,20 @@ import * as movieActions from '@/store/movies/actions';
 
 const SearchInput: React.FC = () => {
   const dispatch = useDispatch();
-  const search = (keyword: string): void => {
-    dispatch(movieActions.setKeyword(keyword));
+  const searchInput = useRef(null);
+
+  const search = (): void => {
+    dispatch(movieActions.setKeyword(searchInput.current.value));
     dispatch(movieActions.getData());
   };
+
+  const checkKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.code === 'Enter') {
+      event.preventDefault();
+      search();
+    }
+  };
+
   return (
     <div className="search">
       <Typography variant="h2">Find your movie</Typography>
@@ -21,12 +31,14 @@ const SearchInput: React.FC = () => {
           label="What do you want to watch?"
           variant="filled"
           style={{ width: '70%' }}
+          inputRef={searchInput}
+          onKeyDown={(event) => checkKeyDown(event)}
         />
         <Button
           variant="contained"
           color="primary"
           className="search-button"
-          onClick={() => search('Harry Potter')}
+          onClick={search}
         >
           Search
         </Button>

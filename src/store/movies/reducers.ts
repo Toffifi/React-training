@@ -1,7 +1,9 @@
+import { SetFilterAction } from './interfaces/actions';
 import { combineReducers } from 'redux';
 
 import {
   SET_MOVIES_DATA,
+  SET_MOVIES_FILTER,
   SET_MOVIES_LOADING,
   SET_SEARCH_KEYWORD,
 } from './types';
@@ -39,6 +41,14 @@ const searchResult = (
         params: {
           ...state.params,
           searchKeyword: (action as SetTitleAction).searchKeyword,
+        },
+      };
+    case SET_MOVIES_FILTER:
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          genre: (action as SetFilterAction).genre,
         },
       };
     default:

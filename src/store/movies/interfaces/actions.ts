@@ -13,5 +13,13 @@ export interface SetTitleAction {
   type: string;
   searchKeyword: string;
 }
+export interface SetFilterAction {
+  type: string;
+  genre: string;
+}
 
-export type Action = SetDataAction | SetLoadingAction | SetTitleAction;
+export type Action =
+  | SetDataAction
+  | SetLoadingAction
+  | SetTitleAction
+  | SetFilterAction;
