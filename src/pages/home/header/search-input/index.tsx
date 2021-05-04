@@ -1,10 +1,10 @@
 import './style.scss';
 
 import React, { useRef } from 'react';
-
-import { Button, TextField, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+
 import * as movieActions from '@/store/movies/actions';
+import { Button, TextField, Typography } from '@material-ui/core';
 
 const SearchInput: React.FC = () => {
   const dispatch = useDispatch();

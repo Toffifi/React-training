@@ -1,6 +1,8 @@
-import { LoadingType } from './../../enums/loadingType';
+import { LoadingType } from '@/enums/loadingType';
 import { SearchData } from '@/interfaces';
+
 import { RootState } from '../';
+
 export const getIsLoading = (state: RootState): LoadingType => {
   return state.movies.searchResult.isLoading;
 };

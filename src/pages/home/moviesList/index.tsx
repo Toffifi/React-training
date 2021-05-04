@@ -1,19 +1,20 @@
 import './style.scss';
 
 import React, { useEffect } from 'react';
-
-import MovieCard from './movieCard';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Spinner from '@/components/spinner';
+import { LoadingType } from '@/enums/loadingType';
+import * as movieActions from '@/store/movies/actions';
 import {
+  getHasNextPage,
   getIsLoading,
   getMoviesData,
-  getHasNextPage,
 } from '@/store/movies/selectors';
-import Spinner from '@/components/spinner';
-import * as movieActions from '@/store/movies/actions';
-import useInfiniteScroll from 'react-infinite-scroll-hook';
-import { LoadingType } from '@/enums/loadingType';
 import { LinearProgress } from '@material-ui/core';
+
+import MovieCard from './movieCard';
 
 const MoviesList: React.FC = () => {
   const dispatch = useDispatch();

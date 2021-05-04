@@ -1,23 +1,26 @@
-import { LoadingType } from './../../enums/loadingType';
 import { combineReducers } from 'redux';
 
-import {
-  SET_MOVIES_DATA,
-  SET_MOVIES_FILTER,
-  SET_MOVIES_LOADING,
-  SET_MOVIES_SORT,
-  SET_SEARCH_KEYWORD,
-  CLEAR_MOVIES_DATA,
-} from './types';
+import { LoadingType } from '@/enums/loadingType';
+
 import {
   Action,
   MoviesData,
   SetDataAction,
-  SetLoadingAction,
-  SetTitleAction,
+  SetErrorAction,
   SetFilterAction,
+  SetLoadingAction,
   SetSortAction,
+  SetTitleAction,
 } from './interfaces';
+import {
+  CLEAR_MOVIES_DATA,
+  SET_MOVIES_DATA,
+  SET_MOVIES_ERROR,
+  SET_MOVIES_FILTER,
+  SET_MOVIES_LOADING,
+  SET_MOVIES_SORT,
+  SET_SEARCH_KEYWORD,
+} from './types';
 
 export interface State {
   searchResult: MoviesData;
@@ -74,6 +77,8 @@ const searchResult = (
           sortBy: (action as SetSortAction).sortBy,
         },
       };
+    case SET_MOVIES_ERROR:
+      return { ...state, error: (action as SetErrorAction).error };
     default:
       return state;
   }

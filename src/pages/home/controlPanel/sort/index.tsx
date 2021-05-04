@@ -1,7 +1,9 @@
 import './style.scss';
 
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
+import * as movieActions from '@/store/movies/actions';
 import {
   createStyles,
   FormControl,
@@ -11,8 +13,6 @@ import {
   Select,
   Theme,
 } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import * as movieActions from '@/store/movies/actions';
 
 const Sort: React.FC = () => {
   const useStyles = makeStyles((theme: Theme) =>

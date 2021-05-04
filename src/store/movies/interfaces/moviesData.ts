@@ -1,4 +1,4 @@
-import { LoadingType } from './../../../enums/loadingType';
+import { LoadingType } from '@/enums/loadingType';
 import { SearchData, SearchParams } from '@/interfaces';
 
 export interface MoviesData {
