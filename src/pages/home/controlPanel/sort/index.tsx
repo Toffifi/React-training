@@ -11,6 +11,8 @@ import {
   Select,
   Theme,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import * as movieActions from '@/store/movies/actions';
 
 const Sort: React.FC = () => {
   const useStyles = makeStyles((theme: Theme) =>
@@ -23,13 +25,25 @@ const Sort: React.FC = () => {
   );
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  const [sortValue, setSortValue] = React.useState('');
+
+  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
+    const value = event.target.value;
+    setSortValue(value);
+    dispatch(movieActions.setSort(value));
+    dispatch(movieActions.getData());
+  };
+
   return (
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel>Sort By</InputLabel>
-        <Select>
-          <MenuItem value={0}>Release Date</MenuItem>
-          <MenuItem value={1}>Name</MenuItem>
+        <Select value={sortValue} onChange={handleChange}>
+          <MenuItem value={''}>Default</MenuItem>
+          <MenuItem value={'release_date'}>Release Date</MenuItem>
+          <MenuItem value={'title'}>Name</MenuItem>
         </Select>
       </FormControl>
     </div>

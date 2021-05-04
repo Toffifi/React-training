@@ -1,11 +1,13 @@
-import { SetFilterAction } from './interfaces/actions';
+import { LoadingType } from './../../enums/loadingType';
 import { combineReducers } from 'redux';
 
 import {
   SET_MOVIES_DATA,
   SET_MOVIES_FILTER,
   SET_MOVIES_LOADING,
+  SET_MOVIES_SORT,
   SET_SEARCH_KEYWORD,
+  CLEAR_MOVIES_DATA,
 } from './types';
 import {
   Action,
@@ -13,6 +15,8 @@ import {
   SetDataAction,
   SetLoadingAction,
   SetTitleAction,
+  SetFilterAction,
+  SetSortAction,
 } from './interfaces';
 
 export interface State {
@@ -21,7 +25,7 @@ export interface State {
 
 const searchResult = (
   state: MoviesData = {
-    isLoading: false,
+    isLoading: LoadingType.none,
     params: {
       searchKeyword: '',
       genre: '',
@@ -32,9 +36,20 @@ const searchResult = (
 ): MoviesData => {
   switch (action.type) {
     case SET_MOVIES_DATA:
-      return { ...state, data: (action as SetDataAction).data };
+      const movieList = state.data
+        ? [...state.data.movieList, ...(action as SetDataAction).data.movieList]
+        : (action as SetDataAction).data.movieList;
+      return {
+        ...state,
+        data: {
+          ...(action as SetDataAction).data,
+          movieList,
+        },
+      };
     case SET_MOVIES_LOADING:
       return { ...state, isLoading: (action as SetLoadingAction).isLoading };
+    case CLEAR_MOVIES_DATA:
+      return { ...state, data: null };
     case SET_SEARCH_KEYWORD:
       return {
         ...state,
@@ -49,6 +64,14 @@ const searchResult = (
         params: {
           ...state.params,
           genre: (action as SetFilterAction).genre,
+        },
+      };
+    case SET_MOVIES_SORT:
+      return {
+        ...state,
+        params: {
+          ...state.params,
+          sortBy: (action as SetSortAction).sortBy,
         },
       };
     default:

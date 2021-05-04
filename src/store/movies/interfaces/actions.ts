@@ -1,3 +1,4 @@
+import { LoadingType } from './../../../enums/loadingType';
 import { SearchData } from '@/interfaces';
 
 export interface SetDataAction {
@@ -6,7 +7,7 @@ export interface SetDataAction {
 }
 export interface SetLoadingAction {
   type: string;
-  isLoading: boolean;
+  isLoading: LoadingType;
 }
 
 export interface SetTitleAction {
@@ -17,9 +18,18 @@ export interface SetFilterAction {
   type: string;
   genre: string;
 }
+export interface SetSortAction {
+  type: string;
+  sortBy: string;
+}
+export interface ClearDataAction {
+  type: string;
+}
 
 export type Action =
   | SetDataAction
   | SetLoadingAction
   | SetTitleAction
-  | SetFilterAction;
+  | SetFilterAction
+  | SetSortAction
+  | ClearDataAction;
