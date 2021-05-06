@@ -1,23 +1,23 @@
 import { combineReducers } from 'redux';
 
-import { LoadingType } from '@/enums/loadingType';
-
 import {
   Action,
   MoviesData,
   SetDataAction,
   SetErrorAction,
   SetFilterAction,
-  SetLoadingAction,
   SetSortAction,
   SetTitleAction,
 } from './interfaces';
 import {
   CLEAR_MOVIES_DATA,
-  SET_MOVIES_DATA,
-  SET_MOVIES_ERROR,
+  MOVIE_LIST_FAIL,
+  MOVIE_LIST_REQUEST,
+  MOVIE_LIST_SUCCESS,
+  NEXT_PAGE_FAIL,
+  NEXT_PAGE_REQUEST,
+  NEXT_PAGE_SUCCESS,
   SET_MOVIES_FILTER,
-  SET_MOVIES_LOADING,
   SET_MOVIES_SORT,
   SET_SEARCH_KEYWORD,
 } from './types';
@@ -28,7 +28,8 @@ export interface State {
 
 const searchResult = (
   state: MoviesData = {
-    isLoading: LoadingType.none,
+    isLoading: false,
+    isPageLoading: false,
     params: {
       searchKeyword: '',
       genre: '',
@@ -38,19 +39,43 @@ const searchResult = (
   action: Action
 ): MoviesData => {
   switch (action.type) {
-    case SET_MOVIES_DATA:
-      const movieList = state.data
-        ? [...state.data.movieList, ...(action as SetDataAction).data.movieList]
-        : (action as SetDataAction).data.movieList;
+    case MOVIE_LIST_REQUEST:
+      return { ...state, isLoading: true };
+    case MOVIE_LIST_SUCCESS:
       return {
         ...state,
+        isLoading: false,
         data: {
           ...(action as SetDataAction).data,
-          movieList,
+          movieList: (action as SetDataAction).data.movieList,
         },
       };
-    case SET_MOVIES_LOADING:
-      return { ...state, isLoading: (action as SetLoadingAction).isLoading };
+    case MOVIE_LIST_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: (action as SetErrorAction).error,
+      };
+    case NEXT_PAGE_REQUEST:
+      return { ...state, isPageLoading: true };
+    case NEXT_PAGE_SUCCESS:
+      return {
+        ...state,
+        isPageLoading: false,
+        data: {
+          ...(action as SetDataAction).data,
+          movieList: [
+            ...state.data.movieList,
+            ...(action as SetDataAction).data.movieList,
+          ],
+        },
+      };
+    case NEXT_PAGE_FAIL:
+      return {
+        ...state,
+        isPageLoading: false,
+        error: (action as SetErrorAction).error,
+      };
     case CLEAR_MOVIES_DATA:
       return { ...state, data: null };
     case SET_SEARCH_KEYWORD:
@@ -77,8 +102,6 @@ const searchResult = (
           sortBy: (action as SetSortAction).sortBy,
         },
       };
-    case SET_MOVIES_ERROR:
-      return { ...state, error: (action as SetErrorAction).error };
     default:
       return state;
   }

@@ -5,29 +5,31 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Spinner from '@/components/spinner';
-import { LoadingType } from '@/enums/loadingType';
 import * as movieActions from '@/store/movies/actions';
 import {
   getHasNextPage,
-  getIsLoading,
+  getLoadingState,
   getMoviesData,
+  getPageLoadingState,
 } from '@/store/movies/selectors';
 import { LinearProgress } from '@material-ui/core';
 
 import MovieCard from './movieCard';
+import { itemOnPage } from '@/utils/constants';
 
 const MoviesList: React.FC = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
+  const isLoading = useSelector(getLoadingState);
+  const isPageLoading = useSelector(getPageLoadingState);
   const hasNextPage = useSelector(getHasNextPage);
 
   const data = useSelector(getMoviesData);
 
   const [sentryRef] = useInfiniteScroll({
-    loading: isLoading === LoadingType.page,
+    loading: isPageLoading,
     hasNextPage,
     onLoadMore: () => {
-      dispatch(movieActions.getData(data.offset + 12, false));
+      dispatch(movieActions.getNextPage(data.offset + itemOnPage));
     },
     disabled: false,
     rootMargin: '0px 0px 400px 0px',
@@ -54,7 +56,7 @@ const MoviesList: React.FC = () => {
           <LinearProgress color="secondary" />
         </div>
       )}
-      {isLoading === LoadingType.initial ? <Spinner /> : null}
+      {isLoading ? <Spinner /> : null}
     </div>
   ) : (
     <Spinner />

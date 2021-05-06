@@ -1,9 +1,10 @@
-import { LoadingType } from '@/enums/loadingType';
 import { SearchData, SearchParams } from '@/interfaces';
+import { LoadError } from './loadError';
 
 export interface MoviesData {
-  isLoading: LoadingType;
+  isLoading: boolean;
+  isPageLoading: boolean;
   data?: SearchData;
   params: SearchParams;
-  error?: string;
+  error?: LoadError;
 }
