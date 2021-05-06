@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
 
-import Filters from './filters';
+import ControlPanel from './controlPanel';
 import Header from './header';
 import MoviesList from './moviesList';
 
-const Home: FC = () => {
+const HomeContainer: FC = () => {
   return (
     <>
       <Header />
-      <Filters />
+      <ControlPanel />
       <MoviesList />
     </>
   );
 };
-export default Home;
+export default HomeContainer;

@@ -1,7 +1,7 @@
 export interface Movie {
-  id: string;
+  id: number;
   name: string;
   genre: string;
-  year: string;
+  year: number;
   poster: string;
 }

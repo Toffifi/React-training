@@ -9,14 +9,12 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const Modal = ({
   children,
-  modalType,
   setModalType,
 }: {
   children: React.ReactNode;
-  modalType: ModalType;
   setModalType: (arg: ModalType) => void;
 }): React.ReactPortal => {
-  const [modalContainer] = useState(() => document.createElement('div'));
+  const [modalContainer] = useState(document.createElement('div'));
 
   useEffect(() => {
     const modalRoot = document.querySelector('#modal-root');
@@ -24,26 +22,24 @@ const Modal = ({
     return function cleanup() {
       modalRoot.removeChild(modalContainer);
     };
-  }, []);
+  }, [modalContainer]);
 
   return ReactDOM.createPortal(
-    modalType !== ModalType.null ? (
-      <>
-        <div
-          className="modal-overlay"
+    <>
+      <div
+        className="modal-overlay"
+        onClick={() => setModalType(ModalType.null)}
+      />
+      <div className="modal">
+        <IconButton
+          className="close-modal"
           onClick={() => setModalType(ModalType.null)}
-        />
-        <div className="modal">
-          <IconButton
-            className="close-modal"
-            onClick={() => setModalType(ModalType.null)}
-          >
-            <CloseIcon />
-          </IconButton>
-          <div className="modal-body">{children}</div>
-        </div>
-      </>
-    ) : null,
+        >
+          <CloseIcon />
+        </IconButton>
+        <div className="modal-body">{children}</div>
+      </div>
+    </>,
     modalContainer
   );
 };

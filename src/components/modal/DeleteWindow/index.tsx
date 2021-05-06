@@ -5,7 +5,7 @@ import React from 'react';
 import { Button, Typography } from '@material-ui/core';
 
 const DeleteWindow: React.FC<{
-  id: string;
+  id: number;
 }> = ({ id }) => {
   return (
     <div className="delete-window">

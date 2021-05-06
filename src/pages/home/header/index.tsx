@@ -22,9 +22,11 @@ const Header: React.FC = () => {
         + Add Movie
       </Button>
       <SearchInput />
-      <Modal modalType={modalType} setModalType={setModalType}>
-        <MovieForm setModalType={setModalType} />
-      </Modal>
+      {modalType === ModalType.null ? null : (
+        <Modal setModalType={setModalType}>
+          <MovieForm setModalType={setModalType} />
+        </Modal>
+      )}
     </div>
   );
 };
