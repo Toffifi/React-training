@@ -2,41 +2,42 @@ import './style.scss';
 
 import React, { useEffect } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Spinner from '@/components/spinner';
-import * as movieActions from '@/store/movies/actions';
-import {
-  getHasNextPage,
-  getLoadingState,
-  getMoviesData,
-  getPageLoadingState,
-} from '@/store/movies/selectors';
+import { SearchData } from '@/interfaces';
 import { LinearProgress } from '@material-ui/core';
 
 import MovieCard from './movieCard';
-import { itemOnPage } from '@/utils/constants';
 
-const MoviesList: React.FC = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(getLoadingState);
-  const isPageLoading = useSelector(getPageLoadingState);
-  const hasNextPage = useSelector(getHasNextPage);
+interface Props {
+  data: SearchData;
+  isLoading: boolean;
+  isPageLoading: boolean;
+  hasNextPage: boolean;
+  dispatchGetNextPage: () => void;
+  dispatchGetData: () => void;
+}
 
-  const data = useSelector(getMoviesData);
-
+const MoviesList: React.FC<Props> = ({
+  data,
+  isLoading,
+  isPageLoading,
+  hasNextPage,
+  dispatchGetNextPage,
+  dispatchGetData,
+}) => {
   const [sentryRef] = useInfiniteScroll({
     loading: isPageLoading,
     hasNextPage,
     onLoadMore: () => {
-      dispatch(movieActions.getNextPage(data.offset + itemOnPage));
+      dispatchGetNextPage();
     },
     disabled: false,
     rootMargin: '0px 0px 400px 0px',
   });
 
   useEffect(() => {
-    dispatch(movieActions.getData());
+    dispatchGetData();
   }, []);
 
   return data ? (

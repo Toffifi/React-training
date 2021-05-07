@@ -10,13 +10,13 @@ import {
   SetTitleAction,
 } from './interfaces';
 import {
-  CLEAR_MOVIES_DATA,
+  MOVIE_CLEAR_DATA,
   MOVIE_LIST_FAIL,
   MOVIE_LIST_REQUEST,
   MOVIE_LIST_SUCCESS,
-  NEXT_PAGE_FAIL,
-  NEXT_PAGE_REQUEST,
-  NEXT_PAGE_SUCCESS,
+  MOVIE_NEXT_PAGE_FAIL,
+  MOVIE_NEXT_PAGE_REQUEST,
+  MOVIE_NEXT_PAGE_SUCCESS,
   SET_MOVIES_FILTER,
   SET_MOVIES_SORT,
   SET_SEARCH_KEYWORD,
@@ -56,9 +56,9 @@ const searchResult = (
         isLoading: false,
         error: (action as SetErrorAction).error,
       };
-    case NEXT_PAGE_REQUEST:
+    case MOVIE_NEXT_PAGE_REQUEST:
       return { ...state, isPageLoading: true };
-    case NEXT_PAGE_SUCCESS:
+    case MOVIE_NEXT_PAGE_SUCCESS:
       return {
         ...state,
         isPageLoading: false,
@@ -70,13 +70,13 @@ const searchResult = (
           ],
         },
       };
-    case NEXT_PAGE_FAIL:
+    case MOVIE_NEXT_PAGE_FAIL:
       return {
         ...state,
         isPageLoading: false,
         error: (action as SetErrorAction).error,
       };
-    case CLEAR_MOVIES_DATA:
+    case MOVIE_CLEAR_DATA:
       return { ...state, data: null };
     case SET_SEARCH_KEYWORD:
       return {

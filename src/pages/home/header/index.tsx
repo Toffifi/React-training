@@ -9,7 +9,11 @@ import { Button } from '@material-ui/core';
 
 import SearchInput from './search-input';
 
-const Header: React.FC = () => {
+interface Props {
+  dispatchGetData: (value: string) => void;
+}
+
+const Header: React.FC<Props> = ({ dispatchGetData }) => {
   const [modalType, setModalType] = useState<ModalType>(ModalType.null);
   return (
     <div className="header">
@@ -21,7 +25,7 @@ const Header: React.FC = () => {
       >
         + Add Movie
       </Button>
-      <SearchInput />
+      <SearchInput dispatchGetData={dispatchGetData} />
       {modalType === ModalType.null ? null : (
         <Modal setModalType={setModalType}>
           <MovieForm setModalType={setModalType} />

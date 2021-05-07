@@ -1,18 +1,18 @@
 import './style.scss';
 
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 
-import * as movieActions from '@/store/movies/actions';
 import { Button, TextField, Typography } from '@material-ui/core';
 
-const SearchInput: React.FC = () => {
-  const dispatch = useDispatch();
+interface Props {
+  dispatchGetData: (value: string) => void;
+}
+
+const SearchInput: React.FC<Props> = ({ dispatchGetData }) => {
   const searchInput = useRef(null);
 
   const search = (): void => {
-    dispatch(movieActions.setKeyword(searchInput.current.value));
-    dispatch(movieActions.getData());
+    dispatchGetData(searchInput.current.value);
   };
 
   const checkKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {

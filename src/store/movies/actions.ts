@@ -16,13 +16,13 @@ import {
   SetTitleAction,
 } from './interfaces';
 import {
-  CLEAR_MOVIES_DATA,
+  MOVIE_CLEAR_DATA,
   MOVIE_LIST_FAIL,
   MOVIE_LIST_REQUEST,
   MOVIE_LIST_SUCCESS,
-  NEXT_PAGE_FAIL,
-  NEXT_PAGE_REQUEST,
-  NEXT_PAGE_SUCCESS,
+  MOVIE_NEXT_PAGE_FAIL,
+  MOVIE_NEXT_PAGE_REQUEST,
+  MOVIE_NEXT_PAGE_SUCCESS,
   SET_MOVIES_FILTER,
   SET_MOVIES_SORT,
   SET_SEARCH_KEYWORD,
@@ -42,13 +42,16 @@ export const setDataError = (message: string): SetErrorAction => {
 };
 
 export const loadNextPage = (): LoadingDataAction => {
-  return { type: NEXT_PAGE_REQUEST };
+  return { type: MOVIE_NEXT_PAGE_REQUEST };
 };
 export const setNextPage = (data: SearchData): SetDataAction => {
-  return { type: NEXT_PAGE_SUCCESS, data };
+  return { type: MOVIE_NEXT_PAGE_SUCCESS, data };
 };
 export const setNextPageError = (message: string): SetErrorAction => {
-  return { type: NEXT_PAGE_FAIL, error: { type: MOVIE_LIST_FAIL, message } };
+  return {
+    type: MOVIE_NEXT_PAGE_FAIL,
+    error: { type: MOVIE_LIST_FAIL, message },
+  };
 };
 
 export const setKeyword = (searchKeyword: string): SetTitleAction => {
@@ -64,14 +67,17 @@ export const setSort = (sortBy: string): SetSortAction => {
 };
 
 export const clearData = (): ClearDataAction => {
-  return { type: CLEAR_MOVIES_DATA };
+  return { type: MOVIE_CLEAR_DATA };
 };
 
-export const getData = (): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const getData = (
+  keyword = ''
+): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch, getState): Promise<void> => {
+    if (keyword) {
+      dispatch(setKeyword(keyword));
+    }
     const params = getState().movies.searchResult.params;
-    dispatch(loadData());
-
     try {
       const result = await getDataRequest(params);
 
@@ -109,4 +115,22 @@ const getDataRequest = async (
     `${url}/movies?sortBy=${params.sortBy}&sortOrder=asc&search=${params.searchKeyword}&searchBy=title&filter=${params.genre}&offset=${offset}&limit=${itemOnPage}`
   );
   return await response.json();
+};
+
+export const getDataOnFilterChange = (
+  value: string
+): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch): Promise<void> => {
+    dispatch(setFilter(value));
+    dispatch(getData());
+  };
+};
+
+export const getDataOnSortChange = (
+  value: string
+): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch): Promise<void> => {
+    dispatch(setSort(value));
+    dispatch(getData());
+  };
 };
