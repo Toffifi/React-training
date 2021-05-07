@@ -1,15 +1,14 @@
-import { LoadingType } from '@/enums/loadingType';
 import { SearchData } from '@/interfaces';
 
+import { LoadError } from './loadError';
+
+export interface LoadingDataAction {
+  type: string;
+}
 export interface SetDataAction {
   type: string;
   data: SearchData;
 }
-export interface SetLoadingAction {
-  type: string;
-  isLoading: LoadingType;
-}
-
 export interface SetTitleAction {
   type: string;
   searchKeyword: string;
@@ -27,14 +26,18 @@ export interface ClearDataAction {
 }
 export interface SetErrorAction {
   type: string;
-  error: string;
+  error: LoadError;
+}
+export interface SetDataChangeStatusAction {
+  type: string;
 }
 
 export type Action =
+  | LoadingDataAction
   | SetDataAction
-  | SetLoadingAction
   | SetTitleAction
   | SetFilterAction
   | SetSortAction
   | ClearDataAction
-  | SetErrorAction;
+  | SetErrorAction
+  | SetDataChangeStatusAction;

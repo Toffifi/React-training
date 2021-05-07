@@ -5,11 +5,24 @@ import React, { useState } from 'react';
 import Modal from '@/components/modal';
 import MovieForm from '@/components/modal/movieForm';
 import { ModalType } from '@/enums/modalType';
+import { SearchResultItem } from '@/store/movies/interfaces';
 import { Button } from '@material-ui/core';
 
 import SearchInput from './search-input';
 
-const Header: React.FC = () => {
+interface Props {
+  dispatchGetData: (value: string) => void;
+  addSnackbar: () => void;
+  isAddLoading: boolean;
+  dispatchAddItem: (item: SearchResultItem) => void;
+}
+
+const Header: React.FC<Props> = ({
+  dispatchGetData,
+  addSnackbar,
+  isAddLoading,
+  dispatchAddItem,
+}) => {
   const [modalType, setModalType] = useState<ModalType>(ModalType.null);
   return (
     <div className="header">
@@ -21,10 +34,15 @@ const Header: React.FC = () => {
       >
         + Add Movie
       </Button>
-      <SearchInput />
+      <SearchInput dispatchGetData={dispatchGetData} />
       {modalType === ModalType.null ? null : (
         <Modal setModalType={setModalType}>
-          <MovieForm setModalType={setModalType} />
+          <MovieForm
+            setModalType={setModalType}
+            addSnackbar={addSnackbar}
+            isAddLoading={isAddLoading}
+            dispatchAddItem={dispatchAddItem}
+          />
         </Modal>
       )}
     </div>

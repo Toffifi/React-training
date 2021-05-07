@@ -62,6 +62,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.3.10",
     "moment": "^2.29.1",
+    "notistack": "^1.0.6",
     "react-infinite-scroll-hook": "^4.0.1",
     "redux-devtools-extension": "^2.13.9"
   }

@@ -1,21 +1,20 @@
 import './style.scss';
 
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import { Genres } from '@/enums/genres';
-import * as movieActions from '@/store/movies/actions';
 import { Tab, Tabs } from '@material-ui/core';
 
-const Filter: React.FC = () => {
-  const dispatch = useDispatch();
+interface Props {
+  dispatchFilter: (value: string) => void;
+}
 
+const Filter: React.FC<Props> = ({ dispatchFilter }) => {
   const [value, setValue] = React.useState('');
 
   const handleChange = (event: React.ChangeEvent, newValue: string) => {
     setValue(newValue);
-    dispatch(movieActions.setFilter(newValue));
-    dispatch(movieActions.getData());
+    dispatchFilter(newValue);
   };
 
   return (

@@ -1,5 +1,6 @@
 import './app.scss';
 
+import { SnackbarProvider } from 'notistack';
 import React, { FC } from 'react';
 
 import { ThemeProvider } from '@material-ui/core';
@@ -14,9 +15,11 @@ const App: FC = () => {
   return (
     <ThemeProvider theme={myTheme}>
       <ErrorBoundary>
-        <Logo />
-        <HomeContainer />
-        <Footer />
+        <SnackbarProvider maxSnack={3}>
+          <Logo />
+          <HomeContainer />
+          <Footer />
+        </SnackbarProvider>
       </ErrorBoundary>
     </ThemeProvider>
   );

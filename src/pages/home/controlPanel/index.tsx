@@ -5,11 +5,16 @@ import React from 'react';
 import Filter from './filter';
 import Sort from './sort';
 
-const ControlPanel: React.FC = () => {
+interface Props {
+  dispatchFilter: (value: string) => void;
+  dispatchSort: (value: string) => void;
+}
+
+const ControlPanel: React.FC<Props> = ({ dispatchFilter, dispatchSort }) => {
   return (
     <div className="control-panel">
-      <Filter />
-      <Sort />
+      <Filter dispatchFilter={dispatchFilter} />
+      <Sort dispatchSort={dispatchSort} />
     </div>
   );
 };

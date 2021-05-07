@@ -2,39 +2,53 @@ import './style.scss';
 
 import React, { useEffect } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Spinner from '@/components/spinner';
-import { LoadingType } from '@/enums/loadingType';
-import * as movieActions from '@/store/movies/actions';
-import {
-  getHasNextPage,
-  getIsLoading,
-  getMoviesData,
-} from '@/store/movies/selectors';
+import { SearchData } from '@/interfaces';
+import { SearchResultItem } from '@/store/movies/interfaces';
 import { LinearProgress } from '@material-ui/core';
 
 import MovieCard from './movieCard';
 
-const MoviesList: React.FC = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
-  const hasNextPage = useSelector(getHasNextPage);
+interface Props {
+  data: SearchData;
+  isLoading: boolean;
+  isPageLoading: boolean;
+  hasNextPage: boolean;
+  dispatchGetNextPage: () => void;
+  dispatchGetData: () => void;
+  dispatchUpdateItem: (item: SearchResultItem) => void;
+  dispatchDeleteItem: (id: number) => void;
+  isDeleteLoading: boolean;
+  isUpdateLoading: boolean;
+  addSnackbar: () => void;
+}
 
-  const data = useSelector(getMoviesData);
-
+const MoviesList: React.FC<Props> = ({
+  data,
+  isLoading,
+  isPageLoading,
+  hasNextPage,
+  dispatchGetNextPage,
+  dispatchGetData,
+  dispatchUpdateItem,
+  dispatchDeleteItem,
+  isDeleteLoading,
+  isUpdateLoading,
+  addSnackbar,
+}) => {
   const [sentryRef] = useInfiniteScroll({
-    loading: isLoading === LoadingType.page,
+    loading: isPageLoading,
     hasNextPage,
     onLoadMore: () => {
-      dispatch(movieActions.getData(data.offset + 12, false));
+      dispatchGetNextPage();
     },
     disabled: false,
     rootMargin: '0px 0px 400px 0px',
   });
 
   useEffect(() => {
-    dispatch(movieActions.getData());
+    dispatchGetData();
   }, []);
 
   return data ? (
@@ -46,7 +60,15 @@ const MoviesList: React.FC = () => {
       </p>
       <div className="movies-list">
         {data.movieList.map((item) => (
-          <MovieCard item={item} key={item.id} />
+          <MovieCard
+            item={item}
+            key={item.id}
+            dispatchUpdateItem={dispatchUpdateItem}
+            dispatchDeleteItem={dispatchDeleteItem}
+            isDeleteLoading={isDeleteLoading}
+            isUpdateLoading={isUpdateLoading}
+            addSnackbar={addSnackbar}
+          />
         ))}
       </div>
       {(isLoading || hasNextPage) && (
@@ -54,7 +76,7 @@ const MoviesList: React.FC = () => {
           <LinearProgress color="secondary" />
         </div>
       )}
-      {isLoading === LoadingType.initial ? <Spinner /> : null}
+      {isLoading ? <Spinner /> : null}
     </div>
   ) : (
     <Spinner />
