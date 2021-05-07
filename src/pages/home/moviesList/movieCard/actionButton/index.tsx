@@ -7,6 +7,7 @@ import DeleteWindow from '@/components/modal/DeleteWindow';
 import MovieForm from '@/components/modal/movieForm';
 import { ModalType } from '@/enums/modalType';
 import { Movie } from '@/interfaces';
+import { SearchResultItem } from '@/store/movies/interfaces';
 import { IconButton, makeStyles, Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -28,6 +29,11 @@ interface ActionButtonProps {
   setAnchorEl: (arg: null | HTMLElement) => void;
   hoverActive: boolean;
   item: Movie;
+  dispatchUpdateItem: (item: SearchResultItem) => void;
+  dispatchDeleteItem: (id: number) => void;
+  isDeleteLoading: boolean;
+  isUpdateLoading: boolean;
+  addSnackbar: () => void;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = ({
@@ -35,6 +41,11 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   setAnchorEl,
   hoverActive,
   item,
+  dispatchUpdateItem,
+  dispatchDeleteItem,
+  isDeleteLoading,
+  isUpdateLoading,
+  addSnackbar,
 }) => {
   const classes = useStyles();
   const open = Boolean(anchorEl);
@@ -52,9 +63,25 @@ const ActionButton: React.FC<ActionButtonProps> = ({
   const modalChoice = (): React.ReactNode => {
     switch (modalType) {
       case ModalType.delete:
-        return <DeleteWindow id={item.id} />;
+        return (
+          <DeleteWindow
+            id={item.id}
+            setModalType={setModalType}
+            dispatchDeleteItem={dispatchDeleteItem}
+            isDeleteLoading={isDeleteLoading}
+            addSnackbar={addSnackbar}
+          />
+        );
       case ModalType.edit:
-        return <MovieForm item={item} setModalType={setModalType} />;
+        return (
+          <MovieForm
+            item={item}
+            setModalType={setModalType}
+            dispatchUpdateItem={dispatchUpdateItem}
+            isUpdateLoading={isUpdateLoading}
+            addSnackbar={addSnackbar}
+          />
+        );
       default:
         return null;
     }

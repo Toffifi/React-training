@@ -18,3 +18,23 @@ export const getHasNextPage = (state: RootState): boolean => {
         state.movies.searchResult.data.offset + itemOnPage
     : false;
 };
+export const getUpdateLoadingState = (state: RootState): boolean => {
+  return state.movies.searchResult.updateStatus.isLoading;
+};
+export const getUpdateStatusState = (state: RootState): boolean => {
+  return state.movies.searchResult.updateStatus.isSuccess;
+};
+
+export const getAddLoadingState = (state: RootState): boolean => {
+  return state.movies.searchResult.addStatus.isLoading;
+};
+export const getAddStatusState = (state: RootState): boolean => {
+  return state.movies.searchResult.addStatus.isSuccess;
+};
+
+export const getDeleteLoadingState = (state: RootState): boolean => {
+  return state.movies.searchResult.deleteStatus.isLoading;
+};
+export const getDeleteStatusState = (state: RootState): boolean => {
+  return state.movies.searchResult.deleteStatus.isSuccess;
+};

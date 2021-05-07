@@ -3,6 +3,7 @@ import './style.scss';
 import React from 'react';
 
 import { Movie } from '@/interfaces';
+import { SearchResultItem } from '@/store/movies/interfaces';
 import {
   Card,
   CardActionArea,
@@ -13,6 +14,15 @@ import {
 } from '@material-ui/core';
 
 import ActionButton from './actionButton';
+
+interface Props {
+  item: Movie;
+  dispatchUpdateItem: (item: SearchResultItem) => void;
+  dispatchDeleteItem: (id: number) => void;
+  isDeleteLoading: boolean;
+  isUpdateLoading: boolean;
+  addSnackbar: () => void;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +35,14 @@ const useStyles = makeStyles({
 });
 
 const defaultImg = 'https://media.comicbook.com/files/img/default-movie.png';
-const MovieCard: React.FC<{ item: Movie }> = ({ item }) => {
+const MovieCard: React.FC<Props> = ({
+  item,
+  dispatchUpdateItem,
+  dispatchDeleteItem,
+  isDeleteLoading,
+  isUpdateLoading,
+  addSnackbar,
+}) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -46,6 +63,11 @@ const MovieCard: React.FC<{ item: Movie }> = ({ item }) => {
           setAnchorEl={setAnchorEl}
           hoverActive={hoverActive}
           item={item}
+          dispatchUpdateItem={dispatchUpdateItem}
+          dispatchDeleteItem={dispatchDeleteItem}
+          isDeleteLoading={isDeleteLoading}
+          isUpdateLoading={isUpdateLoading}
+          addSnackbar={addSnackbar}
         />
         <CardActionArea>
           <CardMedia
@@ -70,7 +92,7 @@ const MovieCard: React.FC<{ item: Movie }> = ({ item }) => {
               component="p"
               className="year"
             >
-              {item.year}
+              {new Date(item.releaseDate).getFullYear()}
             </Typography>
           </CardContent>
         </CardActionArea>

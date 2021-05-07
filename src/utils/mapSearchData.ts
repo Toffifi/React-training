@@ -7,10 +7,10 @@ export const mapSearchData = (result: SearchResult): SearchData => {
       id: movie.id,
       name: movie.title,
       genre: movie.genres?.join(', '),
-      year: movie.release_date
-        ? new Date(movie.release_date).getFullYear()
-        : null,
+      releaseDate: movie.release_date,
       poster: movie.poster_path,
+      overview: movie.overview,
+      runtime: movie.runtime,
     })),
     offset: result.offset,
     totalAmount: result.totalAmount,

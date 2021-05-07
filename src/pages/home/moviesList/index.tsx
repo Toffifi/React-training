@@ -5,6 +5,7 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 import Spinner from '@/components/spinner';
 import { SearchData } from '@/interfaces';
+import { SearchResultItem } from '@/store/movies/interfaces';
 import { LinearProgress } from '@material-ui/core';
 
 import MovieCard from './movieCard';
@@ -16,6 +17,11 @@ interface Props {
   hasNextPage: boolean;
   dispatchGetNextPage: () => void;
   dispatchGetData: () => void;
+  dispatchUpdateItem: (item: SearchResultItem) => void;
+  dispatchDeleteItem: (id: number) => void;
+  isDeleteLoading: boolean;
+  isUpdateLoading: boolean;
+  addSnackbar: () => void;
 }
 
 const MoviesList: React.FC<Props> = ({
@@ -25,6 +31,11 @@ const MoviesList: React.FC<Props> = ({
   hasNextPage,
   dispatchGetNextPage,
   dispatchGetData,
+  dispatchUpdateItem,
+  dispatchDeleteItem,
+  isDeleteLoading,
+  isUpdateLoading,
+  addSnackbar,
 }) => {
   const [sentryRef] = useInfiniteScroll({
     loading: isPageLoading,
@@ -49,7 +60,15 @@ const MoviesList: React.FC<Props> = ({
       </p>
       <div className="movies-list">
         {data.movieList.map((item) => (
-          <MovieCard item={item} key={item.id} />
+          <MovieCard
+            item={item}
+            key={item.id}
+            dispatchUpdateItem={dispatchUpdateItem}
+            dispatchDeleteItem={dispatchDeleteItem}
+            isDeleteLoading={isDeleteLoading}
+            isUpdateLoading={isUpdateLoading}
+            addSnackbar={addSnackbar}
+          />
         ))}
       </div>
       {(isLoading || hasNextPage) && (

@@ -1,5 +1,6 @@
-import { LoadError } from './loadError';
 import { SearchData } from '@/interfaces';
+
+import { LoadError } from './loadError';
 
 export interface LoadingDataAction {
   type: string;
@@ -27,6 +28,9 @@ export interface SetErrorAction {
   type: string;
   error: LoadError;
 }
+export interface SetDataChangeStatusAction {
+  type: string;
+}
 
 export type Action =
   | LoadingDataAction
@@ -35,4 +39,5 @@ export type Action =
   | SetFilterAction
   | SetSortAction
   | ClearDataAction
-  | SetErrorAction;
+  | SetErrorAction
+  | SetDataChangeStatusAction;
